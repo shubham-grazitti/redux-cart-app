@@ -1,7 +1,24 @@
 import styles from './card.module.css';
+import { useDispatch } from 'react-redux';
+import { addToCart } from './../../../slices/cartSlice'
 
 const Card = ({ product }) => {
-  const { thumbnail, title, brand, description, price, discountPercentage } = product;
+  const { id,thumbnail, title, brand, description, price, discountPercentage } = product;
+
+  const dispatch = useDispatch();
+
+  const addToCartHandler = () => {
+    const productToAdd = {
+      id,
+      title,
+      thumbnail,
+      price,
+      amount: 1
+    }
+
+    dispatch(addToCart(productToAdd))
+
+  }
 
   return (
     <div className={styles.card}>
@@ -13,7 +30,7 @@ const Card = ({ product }) => {
         <h3>{title}</h3>
         <p className={styles.desc}>{description}</p>
         <p className={styles.price}>${price}<span>({discountPercentage}% off)</span></p>
-        <button>Add to cart</button>
+        <button onClick={addToCartHandler}>Add to cart</button>
       </div>
     </div>
   );
